@@ -1,11 +1,13 @@
 import os
 import snowflake.connector
-
+from pathlib import Path
 from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
 
 # Load environment variables from .env
-load_dotenv()
+PROJECT_DIR = Path(__file__).resolve().parent
+
+load_dotenv(PROJECT_DIR / ".env")
 
 # Create our MCP server
 mcp = FastMCP("Enterprise Sales Analytics")
@@ -17,7 +19,7 @@ def get_snowflake_connection():
     return snowflake.connector.connect(
         account=os.getenv("SNOWFLAKE_ACCOUNT"),
         user=os.getenv("SNOWFLAKE_USER"),
-        private_key_file="keys/ai_mcp_service.p8",
+        private_key_file=str(PROJECT_DIR / "keys" / "ai_mcp_service.p8"),
         private_key_file_pwd=os.getenv("SNOWFLAKE_PRIVATE_KEY_PASSPHRASE"),
         warehouse=os.getenv("SNOWFLAKE_WAREHOUSE"),
         database=os.getenv("SNOWFLAKE_DATABASE"),
