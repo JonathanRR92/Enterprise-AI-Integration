@@ -67,7 +67,47 @@ def get_sales_by_territory() -> list[dict]:
 
     finally:
         connection.close()
-
+        
+        
+@mcp.tool()
+def get_sales_by_representative() -> list[dict]:
+        """Retrieve total revenue grouped by sales representative.
+        Returns:
+        A list containing sales reps and their total revenue.
+        """
+    
+        connection = get_snowflake_connection()
+    
+        try:
+            cursor = connection.cursor()
+    
+            try:
+                cursor.execute("""
+                    SELECT
+                        SALES_REP,
+                        SUM(REVENUE) AS TOTAL_REVENUE
+                    FROM ENTERPRISE_AI.SALES.SALES_TRANSACTIONS
+                    GROUP BY SALES_REP
+                    ORDER BY TOTAL_REVENUE DESC;
+                """)
+    
+                results = cursor.fetchall()
+    
+                return [
+                    {
+                        "sales_Rep": sales_rep,
+                        "total_revenue": float(rep_revenue),
+                    }
+                    for sales_rep, rep_revenue in results
+                ]
+    
+            finally:
+                cursor.close()
+    
+        finally:
+            connection.close()
+            
+    
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
