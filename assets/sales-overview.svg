@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="390" viewBox="0 0 1120 390" role="img" aria-label="Illustrative revenue chart for fictional sample data: Los Angeles 68500 dollars, San Diego 34000 dollars, Orange County 21500 dollars">
+<rect width="1120" height="390" rx="20" fill="#f4f8fd"/><text x="48" y="58" font-family="Arial" font-size="26" font-weight="bold" fill="#12263f">Sales revenue by territory</text><text x="48" y="85" font-family="Arial" font-size="15" fill="#62758a">Illustrative visualization · 10 fictional transactions · $124,000 total</text>
+<g font-family="Arial" font-size="18" fill="#233e59"><text x="48" y="155">Los Angeles</text><text x="48" y="230">San Diego</text><text x="48" y="305">Orange County</text></g>
+<g fill="#dce7f2"><rect x="220" y="129" width="740" height="36" rx="8"/><rect x="220" y="204" width="740" height="36" rx="8"/><rect x="220" y="279" width="740" height="36" rx="8"/></g>
+<rect x="220" y="129" width="724" height="36" rx="8" fill="#2c80d7"/><rect x="220" y="204" width="359" height="36" rx="8" fill="#28a4b3"/><rect x="220" y="279" width="227" height="36" rx="8" fill="#6e7de1"/>
+<g font-family="Arial" font-size="19" font-weight="bold" fill="#1d3953"><text x="974" y="155">$68,500</text><text x="974" y="230">$34,000</text><text x="974" y="305">$21,500</text></g>
+<text x="48" y="360" font-family="Arial" font-size="13" fill="#697f96">Not a live dashboard or Claude screenshot; values represent the project's fictional seeded dataset.</text>
+</svg>

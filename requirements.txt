@@ -1,0 +1,4 @@
+mcp
+snowflake-connector-python
+python-dotenv
+requests
