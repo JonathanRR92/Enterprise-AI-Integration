@@ -25,20 +25,22 @@ for retrieving CRM records and analyzing sales performance.
 
 ## Architecture
 
+```text
 Claude Desktop
-    |
-    v
+     |
+     v
 Python MCP Server
-    |
-    +-- Salesforce REST API
-    |      |
-    |      +-- OAuth 2.0 Authentication
-    |      +-- CRM Account Data
-    |
-    +-- Snowflake Connector
-           |
-           +-- Key-Pair Authentication
-           +-- Sales Analytics
+     |
+     +---- Salesforce REST API
+     |        |
+     |        +---- OAuth 2.0 Authentication
+     |        +---- CRM Account Data
+     |
+     +---- Snowflake Connector
+              |
+              +---- Key-Pair Authentication
+              +---- Sales Analytics
+```
 
 ## Implemented MCP Tools
 
