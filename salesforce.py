@@ -50,17 +50,81 @@ def get_salesforce_token():
     return token_data["access_token"]
 
 
-# Test Salesforce authentication
+def get_salesforce_accounts():
+
+    # Step 1: Authenticate with Salesforce
+    token = get_salesforce_token()
+
+    # Step 2: Retrieve Salesforce instance URL
+    instance_url = os.getenv("SALESFORCE_INSTANCE_URL").rstrip("/")
+
+    # Step 3: Define our SOQL query
+    query = """
+        SELECT Id, Name, Industry, BillingCity, BillingState
+        FROM Account
+        WHERE Name = 'Pacific Tech Solutions'
+        LIMIT 1
+    """
+
+    # Step 4: Salesforce REST API endpoint
+    url = f"{instance_url}/services/data/v60.0/query"
+
+    # Step 5: Include OAuth access token
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json"
+    }
+
+    # Step 6: Send GET request to Salesforce
+    response = requests.get(
+        url,
+        headers=headers,
+        params={"q": query},
+        timeout=30
+    )
+
+    # Step 7: Check for HTTP errors
+    response.raise_for_status()
+
+    # Step 8: Extract Account records from JSON response
+    return response.json()["records"]
+
+
+# Test Salesforce authentication and Account retrieval
 if __name__ == "__main__":
 
     try:
+        # Test authentication
         token = get_salesforce_token()
 
         if token:
             print("Salesforce authentication successful!")
 
-    except requests.exceptions.RequestException as error:
-        print(f"Salesforce authentication failed: {type(error).__name__}")
+        # Test Account retrieval
+        accounts = get_salesforce_accounts()
 
-    except (ValueError, KeyError) as error:
-        print(f"Salesforce configuration or response error: {type(error).__name__}")
+        if not accounts:
+            print("No matching Salesforce accounts found.")
+
+        for account in accounts:
+            print("\nSalesforce Account Retrieved:")
+            print("Account:", account["Name"])
+            print("Industry:", account["Industry"])
+            print("City:", account["BillingCity"])
+            print("State:", account["BillingState"])
+
+    except requests.exceptions.HTTPError as error:
+        print(
+            "Salesforce API HTTP error:",
+            error.response.status_code
+        )
+
+    except requests.exceptions.RequestException as error:
+        print(
+            f"Salesforce request failed: {type(error).__name__}"
+        )
+
+    except (ValueError, KeyError, TypeError) as error:
+        print(
+            f"Salesforce configuration or response error: {type(error).__name__}"
+        )

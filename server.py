@@ -3,6 +3,7 @@ import snowflake.connector
 from pathlib import Path
 from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
+import salesforce
 
 # Load environment variables from .env
 PROJECT_DIR = Path(__file__).resolve().parent
@@ -106,6 +107,16 @@ def get_sales_by_representative() -> list[dict]:
     
         finally:
             connection.close()
+            
+            
+@mcp.tool()
+def get_crm_accounts() -> list[dict]:
+    """
+    Retrieve Salesforce CRM accounts.
+
+    Returns account names, industries, and billing locations.
+    """
+    return salesforce.get_salesforce_accounts()
             
     
 
